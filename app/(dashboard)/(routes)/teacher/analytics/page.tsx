@@ -1,7 +1,7 @@
 interface AnalyticsPageProps {}
 
 const AnalyticsPage: React.FC<AnalyticsPageProps> = ({}) => {
-  return null;
+  return <div>Analytics page</div>;
 };
 
 export default AnalyticsPage;
