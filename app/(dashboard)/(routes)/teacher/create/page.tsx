@@ -16,6 +16,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 
 interface CreateCoursePageProps {}
@@ -43,7 +44,7 @@ const CreateCoursePage: React.FC<CreateCoursePageProps> = ({}) => {
       const response = await axios.post("/api/courses", values);
       router.push(`/teacher/courses/${response.data.id}`);
     } catch (error) {
-      console.log("Something went wrong.");
+      toast.error("Something went wrong.");
     }
   };
 
