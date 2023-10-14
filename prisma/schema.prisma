@@ -37,10 +37,9 @@ model Category {
 id String @id @default(uuid())
 name String @unique
 
-courseId String
 courses Course[]
 
-}
+} 
 
 model Attachment {
   id  String @id @default(uuid())

@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import TitleForm from "./_components/title-form";
 import DescriptionForm from "./_components/description-form";
 import ImageForm from "./_components/image-form";
+import getCategories from "@/lib/getCategories";
+import CategoryForm from "./_components/category-form";
 
 interface CourseDetailPageProps {
   params: {
@@ -23,6 +25,8 @@ const CourseDetailPage: React.FC<CourseDetailPageProps> = async ({
   }
 
   const course = await getCourseById(params.courseId);
+
+  const categories = await getCategories();
 
   if (!course) {
     return redirect("/");
@@ -60,6 +64,14 @@ const CourseDetailPage: React.FC<CourseDetailPageProps> = async ({
           <TitleForm initialData={course} courseId={course.id} />
           <DescriptionForm initialData={course} courseId={course.id} />
           <ImageForm initialData={course} courseId={course.id} />
+          <CategoryForm
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+            initialData={course}
+            courseId={course.id}
+          />
         </div>
       </div>
     </div>
