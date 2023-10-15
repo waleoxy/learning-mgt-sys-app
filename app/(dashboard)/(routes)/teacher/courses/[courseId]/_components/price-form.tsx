@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { formatPrice } from "@/lib/format-price";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Course } from "@prisma/client";
@@ -21,27 +21,22 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 
-interface DescriptionFormProps {
+interface PriceFormProps {
   initialData: Course;
   courseId: string;
 }
 
 const formSchema = z.object({
-  description: z.string().min(1, {
-    message: "Description is required",
-  }),
+  price: z.coerce.number(),
 });
 
-const DescriptionForm: React.FC<DescriptionFormProps> = ({
-  initialData,
-  courseId,
-}) => {
+const PriceForm: React.FC<PriceFormProps> = ({ initialData, courseId }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || "",
+      price: initialData?.price || undefined,
     },
   });
 
@@ -65,14 +60,14 @@ const DescriptionForm: React.FC<DescriptionFormProps> = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 gap-y-9">
       <div className="font-medium flex items-center justify-between">
-        Course description
+        Course price
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <PencilIcon className="h-4 w-4 mr-2" />
-              Edit description
+              Edit price
             </>
           )}
         </Button>
@@ -81,9 +76,9 @@ const DescriptionForm: React.FC<DescriptionFormProps> = ({
         <p
           className={cn(
             "text-sm mt-2",
-            !initialData.description && "text-slate-500 italic"
+            !initialData.price && "text-slate-500 italic"
           )}>
-          {initialData.description || "No description"}
+          {initialData.price ? formatPrice(initialData?.price) : "No price"}
         </p>
       )}
       {isEditing && (
@@ -93,13 +88,15 @@ const DescriptionForm: React.FC<DescriptionFormProps> = ({
             className="space-y-4 mt-4">
             <FormField
               control={form.control}
-              name="description"
+              name="price"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea
+                    <Input
+                      type="number"
+                      step="0.01"
                       disabled={isSubmitting}
-                      placeholder="e.g. This course is about..."
+                      placeholder="e.g. Set a price for your course"
                       {...field}
                     />
                   </FormControl>
@@ -119,4 +116,4 @@ const DescriptionForm: React.FC<DescriptionFormProps> = ({
   );
 };
 
-export default DescriptionForm;
+export default PriceForm;
