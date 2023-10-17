@@ -4,15 +4,7 @@ import FileUpload from "@/components/file-upload";
 import { Button } from "@/components/ui/button";
 import { Attachment, Course } from "@prisma/client";
 import axios from "axios";
-import {
-  File,
-  ImageIcon,
-  Loader2,
-  PencilIcon,
-  PlusCircle,
-  X,
-} from "lucide-react";
-import Image from "next/image";
+import { File, Loader2, PlusCircle, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
