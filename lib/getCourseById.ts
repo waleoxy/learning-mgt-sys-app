@@ -5,6 +5,13 @@ const getCourseById = async (id: string) => {
     where: {
       id,
     },
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   });
   return course;
 };
