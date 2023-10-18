@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { db } from "./db";
 
-const getChapterById = async (id: string, courseId: string) => {
+const getChapterById = async (courseId: string, chapterId: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -12,7 +12,7 @@ const getChapterById = async (id: string, courseId: string) => {
   const chapter = await db.chapter.findUnique({
     where: {
       courseId,
-      id,
+      id: chapterId,
     },
     include: {
       muxData: true,

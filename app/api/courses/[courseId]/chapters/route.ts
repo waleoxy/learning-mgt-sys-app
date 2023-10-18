@@ -48,3 +48,51 @@ export async function POST(
     return new NextResponse("Internal error", { status: 500 });
   }
 }
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { courseId: string } }
+) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const chapterId = searchParams.get("chapterId");
+
+    console.log(chapterId);
+
+    if (chapterId === null) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const { userId } = auth();
+
+    const { isPublished, ...values } = await request.json();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const couserOwner = await db.course.findUnique({
+      where: {
+        id: params.courseId,
+        userId,
+      },
+    });
+
+    if (!couserOwner) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+    console.log(values);
+
+    const chapter = await db.chapter.update({
+      where: {
+        id: chapterId,
+        courseId: params.courseId,
+      },
+      data: { ...values },
+    });
+
+    return NextResponse.json(chapter);
+  } catch (error) {
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
