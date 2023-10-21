@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import * as z from "zod";
+import MuxPlayer from "@mux/mux-player-react";
 
 interface ChapterVideoFormProps {
   initialData: Chapter & { muxData?: MuxData | null };
@@ -72,7 +73,9 @@ const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">Video uploaded</div>
+          <div className="relative aspect-video mt-2">
+            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ""} />
+          </div>
         ))}
 
       {isEditing && (
