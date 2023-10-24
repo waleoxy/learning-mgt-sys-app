@@ -1,6 +1,12 @@
 import { ReactNode } from "react";
 import Sidebar from "./_components/sidebar";
 import Navbar from "./_components/navbar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "User dashboard of lms-app",
+};
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
