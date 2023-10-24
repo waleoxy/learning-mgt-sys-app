@@ -13,7 +13,7 @@ const NavbarRoutes: React.FC<NavbarRoutesProps> = ({}) => {
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith("/teacher");
-  const isLearnerPage = pathname.includes("/chapter");
+  const isLearnerPage = pathname.includes("/courses");
   const isSearchpage = pathname === "/search";
 
   return (
