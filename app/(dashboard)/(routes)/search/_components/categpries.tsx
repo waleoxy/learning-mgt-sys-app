@@ -20,7 +20,6 @@ interface CategoriesProps {
 }
 
 const iconMap: Record<Category["name"], IconType> = {
-  Music: FcMusic,
   Biology: FcBiomass,
   Physics: FcEngineering,
   "Computer Science": FcMultipleDevices,
