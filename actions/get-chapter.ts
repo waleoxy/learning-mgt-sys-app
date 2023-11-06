@@ -8,9 +8,9 @@ interface GetChapterProps {
 }
 
 export const getChapter = async ({
-  chapterId,
-  courseId,
   userId,
+  courseId,
+  chapterId,
 }: GetChapterProps) => {
   try {
     const purchase = await db.purchase.findUnique({
@@ -24,11 +24,12 @@ export const getChapter = async ({
 
     const course = await db.course.findUnique({
       where: {
-        isPublished: true,
         id: courseId,
+        isPublished: true,
       },
       select: {
         price: true,
+        id: true,
       },
     });
 

@@ -7,6 +7,7 @@ import CourseEnrollButton from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
 import Preview from "@/components/preview";
 import { File } from "lucide-react";
+import CourseProgressButton from "./_components/course-progress-button";
 
 interface ChapterIdPageProps {
   params: {
@@ -22,6 +23,9 @@ const ChapterIdPage: React.FC<ChapterIdPageProps> = async ({ params }) => {
     return redirect("/");
   }
 
+  console.log(params.chapterId);
+  console.log(params.courseId);
+
   const {
     attachments,
     chapter,
@@ -32,8 +36,8 @@ const ChapterIdPage: React.FC<ChapterIdPageProps> = async ({ params }) => {
     userProgress,
   } = await getChapter({
     userId,
-    chapterId: params.chapterId,
     courseId: params.courseId,
+    chapterId: params.chapterId,
   });
 
   if (!chapter || !course) {
@@ -70,7 +74,12 @@ const ChapterIdPage: React.FC<ChapterIdPageProps> = async ({ params }) => {
           <div className="p-4 flex flex-col md:flex-row items-center justify-between">
             <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
             {purchase ? (
-              <div>progress button</div>
+              <CourseProgressButton
+                chapterId={params.chapterId}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id!}
+                isCompleted={!!userProgress?.isCompleted}
+              />
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}

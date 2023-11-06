@@ -48,6 +48,8 @@ export async function DELETE(
       },
     });
 
+    console.log(deletedCourse.id);
+
     return NextResponse.json(deletedCourse);
   } catch (error) {
     return new NextResponse("Internal error", { status: 500 });

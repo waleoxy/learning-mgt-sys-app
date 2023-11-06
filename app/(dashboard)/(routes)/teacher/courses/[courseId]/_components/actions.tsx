@@ -25,8 +25,6 @@ const Actions: React.FC<ActionsProps> = ({
   const confetti = useConfettiStore();
 
   const onClick = async () => {
-    console.log(isPublished);
-
     try {
       setIsLoading(true);
       await axios.patch(`/api/courses/${courseId}?&publish=${isPublished}`);

@@ -98,13 +98,15 @@ export async function PATCH(
       });
 
       if (values.videoUrl) {
+        console.log(values.videoUrl);
+
         const existingMuxdata = await db.muxData.findFirst({
           where: {
             chapterId: chapterId,
           },
         });
 
-        if (existingMuxdata) {
+        if (existingMuxdata !== null) {
           await Video.Assets.del(existingMuxdata.assetId);
           await db.muxData.delete({
             where: {

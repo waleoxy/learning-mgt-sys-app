@@ -34,6 +34,8 @@ const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+
     try {
       await axios.patch(
         `/api/courses/${courseId}/chapters?chapterId=${chapterId}`,
@@ -83,6 +85,7 @@ const ChapterVideoForm: React.FC<ChapterVideoFormProps> = ({
           <FileUpload
             endpoint="chapterVideo"
             onChange={(url) => {
+              console.log("url: ", url);
               if (url) {
                 onSubmit({ videoUrl: url });
               }
